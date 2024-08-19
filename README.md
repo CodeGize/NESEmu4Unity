@@ -6,3 +6,5 @@
 <li>https://github.com/Xyene/Emulator.NES
 <li>https://github.com/ChillMagic/VirtuaNES
 <li>http://virtuanes.s1.xrea.com/vnes_dl.php
+
+注意：目前音频部分还有瑕疵，部分rom无法还原到真实的音乐效果
