@@ -43,12 +43,12 @@ namespace dotNES
         public void ExecuteSingleInstruction()//执行单指令
         {
             TotleCycle++;
-            if (Cycle > 0)
+            Cycle--;
+            if (Cycle >= 0)
             {
-                Cycle--;
                 return;
             }
-
+            
             for (int i = 0; i < _interrupts.Length; i++)//中断处理
             {
                 if (_interrupts[i])
@@ -80,8 +80,9 @@ namespace dotNES
 
         public void TriggerInterrupt(InterruptType type)//中断
         {
-            //if (F.InterruptsDisabled)
-            //    return;
+            if (!F.InterruptsDisabled)
+                _interrupts[(int)type] = true;
+
             switch (type)
             {
                 case InterruptType.NMI:
