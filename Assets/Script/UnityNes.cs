@@ -23,7 +23,7 @@ namespace NESGame
         private const int GameHeight = 240;
         protected void Awake()
         {
-            Application.targetFrameRate = -1;
+            Application.targetFrameRate = 60; // 设置为标准NES帧率
             m_Tex = new Texture2D(GameWidth, GameHeight, TextureFormat.ARGB32, false);
             m_Tex.filterMode = FilterMode.Point;
             Img.texture = m_Tex;

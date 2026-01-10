@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -102,16 +103,36 @@ namespace dotNES
 
         private void ThreadRun(object state)
         {
+            var targetFps = 60; // NES标准帧率
+            var frameTime = 1000.0 / targetFps; // 毫秒
+            var lastFrameTime = DateTime.Now;
+
             while (IsRunning)
             {
                 if (IsPause)
+                {
                     continue;
+                }
 
                 if (PPU != null)
                 {
                     PPU.ProcessFrame();
                 }
 
+                // 控制帧率，避免运行过快
+                var currentTime = DateTime.Now;
+                var elapsedMs = (currentTime - lastFrameTime).TotalMilliseconds;
+                
+                if (elapsedMs < frameTime)
+                {
+                    var sleepTime = (int)(frameTime - elapsedMs);
+                    if (sleepTime > 0)
+                    {
+                        Thread.Sleep(sleepTime);
+                    }
+                }
+                
+                lastFrameTime = DateTime.Now;
             }
         }
 
